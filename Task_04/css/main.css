@@ -1,0 +1,284 @@
+/* Reset CSS*/
+
+html, body, div, span, applet, object, iframe,
+h1, h2, h3, h4, h5, h6, p, blockquote, pre,
+a, abbr, acronym, address, big, cite, code,
+del, dfn, em, img, ins, kbd, q, s, samp,
+small, strike, strong, sub, sup, tt, var,
+b, u, i, center,
+dl, dt, dd, ol, ul, li,
+fieldset, form, label, legend,
+table, caption, tbody, tfoot, thead, tr, th, td,
+article, aside, canvas, details, embed,
+figure, figcaption, footer, header, hgroup,
+menu, nav, output, ruby, section, summary,
+time, mark, audio, video {
+	margin: 0;
+	padding: 0;
+	border: 0;
+	font-size: 100%;
+	font: inherit;
+	vertical-align: baseline;
+}
+/* HTML5 display-role reset for older browsers */
+article, aside, details, figcaption, figure,
+footer, header, hgroup, menu, nav, section {
+	display: block;
+}
+body {
+	line-height: 1;
+}
+ol, ul {
+	list-style: none;
+}
+blockquote, q {
+	quotes: none;
+}
+blockquote:before, blockquote:after,
+q:before, q:after {
+	content: '';
+	content: none;
+}
+table {
+	border-collapse: collapse;
+	border-spacing: 0;
+}
+
+
+html, body {
+	height: 100%;
+	padding: 0;
+	margin: 0;
+	
+}
+
+body {
+	font-family: Verdana,sans-serif;
+	font-size: 18px;
+	background: #f3f3f3;
+}
+
+.overflow-hidden {
+	overflow: hidden;
+}
+
+
+
+.wrapper {
+	min-height: 100%;
+	padding-bottom: 60px;
+	box-sizing: border-box;
+}
+
+.header {
+	padding: 40px;
+	background: #101010;
+}
+
+.clearfix:after {
+	content: '';
+	clear: both;
+	display: block;
+}
+
+.footer {
+	margin-top: -50px;
+	padding: 25px;
+	background: #101010;
+}
+.footer p {
+	color: #fff;
+}
+
+h1 {
+	display: inline-block;
+	color:#fff; 
+	padding-left: 50px;
+	font-size: 30px;
+}
+
+.sidebar {
+	box-sizing: border-box;
+	border-right: 2px solid #000;
+	padding-right: 20px;
+	float: left;
+	width: 30%;
+}
+
+.main-content {
+	box-sizing: border-box;
+	padding: 20px;
+	float: left;
+	width: 70%;
+
+}
+
+.main {
+	border: 2px solid #000;
+}
+
+.container {
+	width: 1000px;
+	margin: 0 auto;
+}
+
+.newdoc-dialog, .newpar-dialog {
+	
+	position: absolute;
+	background: rgba(0,0,0,0.3);
+	
+	width: 100%;
+	height: 100%;
+}
+
+.newdoc-save-form,.newpar-save-form {
+	margin: 300px auto;
+	
+	vertical-align: middle;
+	width: 450px;
+	background: #fff;
+	border-radius: 12px;
+	padding: 50px 0;
+	
+}
+
+.newdoc-save-form span, .newpar-save-form span{
+	margin-left: 35px;
+	font-size: 20px;
+	font-family: Verdana,sans-serif;
+	padding-right: 18px;
+}
+
+.newpar-save-form span {
+	margin-left: 27px;
+	display: inline-block;
+	width: 190px;
+}
+
+.newpar-form>div {
+	margin-top: 15px;
+	padding-bottom: 10px;
+}
+
+.newDoc-create-btn,.newDoc-clear-btn,
+.newPar-create-btn,.save-btn,
+.newPar-create-btn,.newpar-btn,
+.newdoc-btn,.newPar-clear-btn {
+	width: 110px;
+	height: 30px;
+	border-radius: 12px;
+	position: relative;
+	margin: 0 10px;
+
+}
+
+.save-btn:disabled,.newpar-btn:disabled,.newdoc-btn:disabled {
+	opacity: 0.3;
+}
+
+
+.newpar-save-form {
+	padding-top: 20px;
+	padding-bottom: 30px;
+}
+.newDocName,.newParName,.newParContent {
+	font-size: 17px;
+	width: 180px;
+	padding: 3px;
+	box-sizing: border-box;
+}
+
+.newpar-form div:nth-child(2) {
+	text-align: center;
+}
+
+.newpar-form div:nth-child(2) textarea {
+	width: 20em;
+	height: 8em;
+
+}
+
+
+button:active, button:focus {
+	top: 2px;
+	outline: 0;
+}
+.newDoc-create-btn {
+	
+}
+
+.btn-container{
+	margin-top: 30px;
+	margin-left: 30px;
+}
+
+.newdoc-form {
+	height: ;
+	position: relative;
+}
+
+.doc-list li ul {
+	display: none;
+	padding: 5px;
+	margin-left: 30px;
+}
+
+.doc-list li ul li{
+	padding: 3px;
+	overflow: hidden;
+	text-overflow: ellipsis;
+}
+
+.doc-list a, .doc-list a:visited{
+	font-size: 16px;
+	text-decoration: none;
+	color: #000;
+	
+	
+}
+
+.doc-list>li {
+	text-transform: capitalize;
+	margin-left: 10px;
+	margin-top: 20px;
+	cursor: pointer;
+	border-bottom: 1px solid #8e7f7f;
+	padding-bottom: 10px;
+}
+
+h2 {
+	font-size: 22px;
+	text-align: center;
+}
+
+
+
+.doc-list a:hover {
+
+    text-decoration: underline;
+}
+
+.doc-list li ul.visible {
+	display: block;
+}
+
+.main {
+	padding: 20px;
+}
+
+.paragraph h4 {
+	padding: 10px 30px;
+	background: #101010;
+	color: #fff;
+	text-transform: capitalize;
+}
+
+.paragraph p {
+	height: auto;
+	transition:height 1s;
+	box-sizing: border-box;
+	overflow: hidden;
+	margin: 20px;
+	font-size: 16px;
+	line-height: 20px;
+}
