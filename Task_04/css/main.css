@@ -70,10 +70,14 @@ body {
 	padding-bottom: 60px;
 	box-sizing: border-box;
 }
+.background-black{
+	background-color: #000;
+}
 
 .header {
 	padding: 40px;
 	background: #101010;
+	box-sizing: border-box;
 }
 
 .clearfix:after {
@@ -83,7 +87,7 @@ body {
 }
 
 .footer {
-	margin-top: -50px;
+	margin-top: -70px;
 	padding: 25px;
 	background: #101010;
 }
@@ -274,18 +278,26 @@ h2 {
 	padding: 20px;
 }
 
-.paragraph h4 {
+ h4 {
 	cursor: pointer;
 	padding: 10px 40px;
 	background: #101010;
 	color: #fff;
 	text-transform: capitalize;
-	background-image: url('../img/arrow.png');
+	
+}
+.paragraph .arrow-down{
 	background-size: 40px 40px;
 	background-repeat: no-repeat;
 	background-position: right; 
+	background-image: url('../img/arrow_down.png');
 }
-
+.paragraph .arrow-up {
+	background-size: 40px 40px;
+	background-repeat: no-repeat;
+	background-position: right; 
+	background-image: url('../img/arrow_up.png');
+}
 .paragraph p {
 	height: auto;
 	transition:height 1s;

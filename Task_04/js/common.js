@@ -1,6 +1,30 @@
 (function(){
-	document.querySelector('.wrapper').style.width = window.innerWidth + 'px';
-		getInfoFromService('getDocumentsList',createListDocs);
+
+	/*Make AJAX request, add result in cash and call function callback with resived parametrs*/
+	var getInfoFromService=(function (){
+		var queryWithoutCash='getDocumentsList';
+		var cash={};
+		return function(url,callback){
+			if(!cash.hasOwnProperty(url) || (url.indexOf(queryWithoutCash))===0){
+				var request = new XMLHttpRequest();
+				var result;
+				request.open('GET','http://localhost:3000/docs.svc/' + url,true);
+					request.onreadystatechange = function(){
+						if (request.readyState === 4){
+							result = JSON.parse(request.responseText); 
+							cash[url]=result;
+							console.log('from cash ' + url);
+							return callback(result);
+						}
+					};
+				request.send();
+			}else{
+				return callback(cash[url]);
+			}
+		};
+	}());
+
+getInfoFromService('getDocumentsList',createListDocs);
 
 
 /*Save document to database*/
@@ -11,20 +35,6 @@ function save(data){
 	request.send('document='+JSON.stringify(data));
 }
 
-/*Make AJAX request and call function callback with resived parametrs*/
-function getInfoFromService(url,callback){
-	var request = new XMLHttpRequest();
-	var result;
-	request.open('GET','http://localhost:3000/docs.svc/' + url,true);
-		request.onreadystatechange = function(){
-			if (request.readyState === 4){
-				result = JSON.parse(request.responseText); 
-				return callback(result);
-			}
-		};
-	request.send();	
-
-}
 
 /*Create list of docs and create menu from this list*/
 function createListDocs(docs){
@@ -56,8 +66,9 @@ function createListDocs(docs){
 			}
 			
 			docList.appendChild(nodeLi);
-			nodeLi.addEventListener('click', docEvent,true);
- 			
+			nodeLi.addEventListener('click', docEvent,true); 			
+			document.querySelector('.header').style.width = document.body.clientWidth+ 'px';
+			document.querySelector('.content-wrapper').style.width = document.body.clientWidth+ 'px';
 		}
 	}
 }
@@ -136,7 +147,8 @@ function createDocument(paragraphs){
 			continue;
 		}
 		var nodeH4 = document.createElement('h4');
-		nodeH4.appendChild(document.createTextNode(paragraphs.fragments[i].name));		
+		nodeH4.appendChild(document.createTextNode(paragraphs.fragments[i].name));
+		nodeH4.classList.add('arrow-down');		
 		nodeH4.id = 'p' + i;
 		var nodeP = document.createElement('p');
 		nodeP.appendChild(document.createTextNode(paragraphs.fragments[i].content));
@@ -277,17 +289,24 @@ function newParCancelBtnEvent(){
 }
 
 
-
+function changeArrow(argument) {
+	if(argument.className.indexOf('arrow-down')>=0){
+		argument.className=argument.className.replace('arrow-down','arrow-up');
+	}else{
+		argument.className=argument.className.replace('arrow-up','arrow-down');
+	}
+}
 
 function collapseParagraph(){	
 
 	var element = this.nextElementSibling;
 	var height = element.clientHeight; 
-	
 	if(height===0){
+		changeArrow(this);
 		changeHeight(element,1,saveHeight(this));
 	}
 	if(height===saveHeight(this)){
+		changeArrow(this);
 		changeHeight(element,-1,saveHeight(this));
 	}	
 }
@@ -309,25 +328,23 @@ function scrollWindow(event) {
 	var elementClick = event.target;
 	var id = elementClick.hash;
 	event.preventDefault();
-	var target=document.querySelector(id).getBoundingClientRect().top;
-	var k = window.pageYOffset;
+	var target=document.querySelector(id).getBoundingClientRect().top;	
 	var i;
 	if(target > 50){
-		i = 1;
+		i = 15;
 	}else if(target<0) {
-		i = -1;
+		i = -15;
 	}else{		
 		return;
 	}
 
 	var p = setInterval(function(){
 		target = document.querySelector(id).getBoundingClientRect().top;
-		if(target<100 && target >= 0){
+		if(target<35 && target >= 0){
 			clearInterval(p);
 		}
-		window.scrollTo(0,k);
-		k+=(40 * i);
-	},80);
+		window.scrollBy(0,i);
+	},30);
 }
 
 })();
