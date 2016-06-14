@@ -1,5 +1,6 @@
 (function(){
-getInfoFromService('getDocumentsList',createListDocs);
+	document.querySelector('.wrapper').style.width = window.innerWidth + 'px';
+		getInfoFromService('getDocumentsList',createListDocs);
 
 
 /*Save document to database*/
@@ -155,23 +156,22 @@ var documentCreater = (function (){
 
 	return function(name,content){	
 		if(!name && !content){
-			var c=documentForSave;
-			documentForSave={};
+			var c = documentForSave;
+			documentForSave = {};
 			return c;
 		}
 		if(!documentForSave.hasOwnProperty('name')){
 			document.querySelector('.save-btn').disabled = false;
-			document.querySelector('.newdoc-btn').disabled = true;
 			document.querySelector('.newpar-btn').disabled = false;
 			documentForSave.name = name;
 		}else {
 			if(documentForSave.hasOwnProperty('fragments')){
 				documentForSave.fragments.push({'name' : name , 'content' : content});
-		}else {
-			documentForSave.fragments = [];
-			documentForSave.fragments.push({'name' : name , 'content' : content});
-		}
-	}			
+			}else {
+				documentForSave.fragments = [];
+				documentForSave.fragments.push({'name' : name , 'content' : content});
+			}
+		}			
 	return documentForSave;
 	};
 }());
@@ -189,17 +189,23 @@ var saveHeight=(function () {
 }());
 
 /*Change height of block pararaph*/
-function changeHeight(element,direction,height) {	
+function changeHeight(element,direction,height) {
 	var currentHeight=element.clientHeight;
 	var p=setInterval(function(){
-		element.style.height=currentHeight+'px';
 		currentHeight+=direction*10;
-		if(currentHeight>height){
+		element.style.height=currentHeight+'px';
+		if(currentHeight<=10 && direction==-1){
+			element.style.height=0;
+			clearInterval(p);			
+		}		
+		if(currentHeight>(height-10)){
+			element.style.height=height;
 			clearInterval(p);
 		}
 	},20);
 
 }
+
 
 /*Events*/
 
@@ -227,7 +233,8 @@ function newDocOpenBtnEvent(){
 	createNewDocDialog();
 	document.querySelector('body').classList.add('overflow-hidden');
 	document.querySelector('.newDoc-create-btn').addEventListener('click', newDocCreateBtnEvent);
-	document.querySelector('.newDoc-clear-btn').addEventListener('click', newDocCancelBtnEvent);	
+	document.querySelector('.newDoc-clear-btn').addEventListener('click', newDocCancelBtnEvent);
+	document.querySelector('.newdoc-btn').disabled = true;	
 }
 
 function newParOpenBtnEvent(){
@@ -239,14 +246,18 @@ function newParOpenBtnEvent(){
 
 	
 function newDocCreateBtnEvent(){
-	documentCreater(document.querySelector('.newDocName').value);
+	var newDocName =document.querySelector('.newDocName').value;
+	documentCreater(newDocName);
 	document.querySelector('body').classList.remove('overflow-hidden');	
 	document.querySelector('body').removeChild(document.querySelector('.newdoc-dialog'));
+	var cretingDocName = document.querySelector('.creating_doc_name');
+	cretingDocName.appendChild(document.createTextNode(newDocName));
 }
 
 function newDocCancelBtnEvent(){
 	document.querySelector('body').classList.remove('overflow-hidden');	
 	document.querySelector('body').removeChild(document.querySelector('.newdoc-dialog'));
+	document.querySelector('.newdoc-btn').disabled = false;
 }
 
 function newParCreateBtnEvent(){
@@ -255,6 +266,10 @@ function newParCreateBtnEvent(){
 	documentCreater(name,content);
 	document.querySelector('body').classList.remove('overflow-hidden');	
 	document.querySelector('body').removeChild(document.querySelector('.newpar-dialog'));
+	var cretingParContainer = document.querySelector('.list_new_par');
+	var cretaingListPar = document.createElement('li');
+	cretaingListPar.appendChild(document.createTextNode(name));
+	cretingParContainer.appendChild(cretaingListPar);
 }
 
 function newParCancelBtnEvent(){
@@ -270,9 +285,10 @@ function collapseParagraph(){
 	var element = this.nextElementSibling;
 	var height = element.clientHeight; 
 	
-	if(height<=10){
+	if(height===0){
 		changeHeight(element,1,saveHeight(this));
-	}else{
+	}
+	if(height===saveHeight(this)){
 		changeHeight(element,-1,saveHeight(this));
 	}	
 }
@@ -283,6 +299,8 @@ function saveEvent(){
 	document.querySelector('.newpar-btn').disabled = true;
 	getInfoFromService('getDocumentsList',createListDocs);
 	document.querySelector('.save-btn').disabled = true;
+	document.querySelector('.creating_doc_name').innerHTML = '';
+	document.querySelector('.list_new_par').innerHTML = '';
 
 }
 
@@ -295,18 +313,22 @@ function scrollWindow(event) {
 	var target=document.querySelector(id).getBoundingClientRect().top;
 	var k = window.pageYOffset;
 	var i;
-	if((k - target) > 0){
-		i = -1;
-	}else {
+	var c=0;
+	if(target > 50){
 		i = 1;
+	}else if(target<0) {
+		i = -1;
+	}else{		
+		return;
 	}
+
 	var p = setInterval(function(){
+		console.log(c++);
 		target = document.querySelector(id).getBoundingClientRect().top;
-		if(target<100 && target > 0){
+		if(target<100 && target >= 0){
 			clearInterval(p);
 		}
 		window.scrollTo(0,k);
-		
 		k+=(40 * i);
 	},80);
 }
