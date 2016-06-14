@@ -136,11 +136,11 @@ function createDocument(paragraphs){
 			continue;
 		}
 		var nodeH4 = document.createElement('h4');
-		nodeH4.addEventListener('click', collapseParagraph);
-		nodeH4.appendChild(document.createTextNode(paragraphs.fragments[i].name));
+		nodeH4.appendChild(document.createTextNode(paragraphs.fragments[i].name));		
 		nodeH4.id = 'p' + i;
 		var nodeP = document.createElement('p');
 		nodeP.appendChild(document.createTextNode(paragraphs.fragments[i].content));
+		nodeH4.addEventListener('click', collapseParagraph);
 		paragraph.appendChild(nodeH4);
 		paragraph.appendChild(nodeP);
 	}
@@ -216,8 +216,7 @@ document.querySelector('.save-btn').addEventListener('click', saveEvent);
 
 function docEvent(event){
 	 var url = 'getDocumentById?docId=' + this.id.split('_')[1];	 
-	 getInfoFromService(url,createDocument); 
-	 
+	 getInfoFromService(url,createDocument); 	 
 
 	 if(this.children[0].className.indexOf('visible')>=0){
 	 	if(event.target.tagName !== 'A'){
@@ -313,7 +312,6 @@ function scrollWindow(event) {
 	var target=document.querySelector(id).getBoundingClientRect().top;
 	var k = window.pageYOffset;
 	var i;
-	var c=0;
 	if(target > 50){
 		i = 1;
 	}else if(target<0) {
@@ -323,7 +321,6 @@ function scrollWindow(event) {
 	}
 
 	var p = setInterval(function(){
-		console.log(c++);
 		target = document.querySelector(id).getBoundingClientRect().top;
 		if(target<100 && target >= 0){
 			clearInterval(p);
