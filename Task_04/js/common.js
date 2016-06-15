@@ -330,20 +330,20 @@ function scrollWindow(event) {
 	var target=document.querySelector(id).getBoundingClientRect().top;	
 	var i;
 	if(target > 50){
-		i = 15;
+		i = 2;
 	}else if(target<0) {
-		i = -15;
+		i = -2;
 	}else{		
 		return;
 	}
 
 	var p = setInterval(function(){
 		target = document.querySelector(id).getBoundingClientRect().top;
-		if(target<35 && target >= 0){
+		if(target<15 && target >= 10){
 			clearInterval(p);
 		}
 		window.scrollBy(0,i);
-	},30);
+	},0.8);
 }
 
 })();
