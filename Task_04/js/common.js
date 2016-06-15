@@ -172,7 +172,6 @@ var documentCreater = (function (){
 			return c;
 		}
 		if(!documentForSave.hasOwnProperty('name')){
-			document.querySelector('.save-btn').disabled = false;
 			document.querySelector('.newpar-btn').disabled = false;
 			documentForSave.name = name;
 		}else {
@@ -182,6 +181,7 @@ var documentCreater = (function (){
 				documentForSave.fragments = [];
 				documentForSave.fragments.push({'name' : name , 'content' : content});
 			}
+			document.querySelector('.save-btn').disabled = false;
 		}			
 	return documentForSave;
 	};
