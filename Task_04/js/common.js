@@ -13,7 +13,6 @@
 						if (request.readyState === 4){
 							result = JSON.parse(request.responseText); 
 							cash[url]=result;
-							console.log('from cash ' + url);
 							return callback(result);
 						}
 					};
