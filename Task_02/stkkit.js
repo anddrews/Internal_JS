@@ -88,17 +88,15 @@ var STKit=(function () {
      */
 
   var objBehaviorizer=function (obj,obj1) {
-  if(typeof obj1=='object' && !Object.isFrozen(obj1) && !Object.isSealed(obj1))
-  {
+  if(typeof obj1=='object' && !Object.isFrozen(obj1) && !Object.isSealed(obj1)){
   	var copy=clone(obj);
     var arrBehav=objDebehaviorizer(copy,true);
     for (var i = 0; i < arrBehav.length; i++) {    		
       obj1[arrBehav[i].name]=arrBehav[i];
     }
-  }
-  else{
+  } else{
     throw new Error('Can not add behave into obj');
-  }
+    }
 	};
 // function to delete any behavior from 'currObj', return array with metods, and changing inputed obj
  function deleteProperty(currObj) {
@@ -192,7 +190,7 @@ function newFunction(str) {// function create new Function from string
   else{
     bodyFunc=/\|(.*)\|/.exec(str);
   }
-  return new Function(param[1],bodyFunc[1]);// 'new Function' is a form of eval, but required here
+  return new Function(param[1],bodyFunc[1]); // 'new Function' is a form of eval, but required here
 }
 /**
   * Object parseToObj.
@@ -212,8 +210,7 @@ var parseToObj=function (str) {
     if(str.indexOf(':')<0){
       output=makeObj(str);
     }
-    else
-    {
+    else {
       index=str.substring(0,str.indexOf(':')).lastIndexOf(';');
       output=makeObj(str.substring(0,index));
       strToArray=str.substring(index+1,str.length).split(':');
@@ -254,8 +251,7 @@ var objStringyFy=function (obj,callBack) {
     if(obj.hasOwnProperty(prop)){
       if(typeof objNew[prop]!='object'){
         result+=prop+ ',' + objNew[prop]+';';
-      }
-      else{
+      } else{
         result+=prop+','+objStringyFy(objNew[prop]);
       }
     }
